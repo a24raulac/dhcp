@@ -22,6 +22,7 @@ RUN mkdir -p /run/kea /var/run/kea /var/lib/kea && \
     touch /var/lib/kea/kea-leases4.csv && \
     chmod -R 777 /run/kea /var/run/kea /var/lib/kea
 
+RUN rm -f /var/run/kea/kea-dhcp4.kea-dhcp4.pid
 
 RUN sed -i 's/^\s*module(load="imklog")/#module(load="imklog")/' /etc/rsyslog.conf
 
