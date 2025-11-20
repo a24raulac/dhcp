@@ -6,6 +6,7 @@ $TTL 86400
                         604800     ; Expire
                         86400 )    ; Minimum
 
-@       IN      NS      arya.stark.lan.
+@        IN      NS      arya.stark.lan.
 
-arya    IN      A       192.168.10.11
+; Servidor principal
+11      IN      PTR     arya.stark.lan.

@@ -17,19 +17,18 @@ services:
         interface_name: eth3
     cap_add:
       - NET_ADMIN
-    
-    arya:
-      build: dnsserver
-      hostname: arya
-      ports:
-        - 127.0.0.1:53:53
-      command: -f -4
-      volumes:
-      - ./arya/db.stark.lan:/etc/bind/db.stark.lan
+  arya:
+    build: dnsserver
+    hostname: arya
+    networks:
+      rede_stark:
+        ipv4_address: 192.168.10.11
+    cap_add:
+      - NET_ADMIN    
+    volumes:
       - ./arya/named.conf.local:/etc/bind/named.conf.local
-      networks:
-        rede_stark:
-          ipv4_address: 192.168.10.20
+      - ./arya/named.conf.options:/etc/bind/named.conf.options
+      - ./arya/zonas:/var/cache/bind/zonas
   ned:
     build: ./kea
     hostname: ned
@@ -52,19 +51,6 @@ services:
     networks:
       rede_stark:
         mac_address: 02:42:ac:11:00:10  # dirección HW fija
-    cap_add:
-      - NET_ADMIN
-    command: >
-      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
-
-  bran:
-    build: ./cliente
-    hostname: bran
-    depends_on:
-      - ned
-    networks:
-      rede_stark:
-        mac_address: 02:42:ac:11:00:ab  # dirección HW fija
     cap_add:
       - NET_ADMIN
     command: >
@@ -155,3 +141,4 @@ networks:
     ipam:
       config:
         - subnet: 192.0.2.0/24            
+        
