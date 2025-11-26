@@ -1,0 +1,9 @@
+$TTL 86400
+@       IN      SOA     arya.targaryen.lan. admin.targaryen.lan. (
+                        2025011801 ; Serial
+                        3600       ; Refresh
+                        1800       ; Retry
+                        604800     ; Expire
+                        86400 )    ; Minimum
+
+@        IN      NS      arya.targaryen.lan.
