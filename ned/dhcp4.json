@@ -1,9 +1,34 @@
 {
   "Dhcp4": {
+    "loggers": [
+      {
+        "name": "kea-dhcp4",
+        "severity": "INFO",
+        "output_options": [
+          {
+            "output": "/var/log/kea/kea.log"
+          }
+        ]
+      }
+    ],
+    "dhcp-ddns": {
+      "enable-updates": true,
+      "server-ip": "127.0.0.1",
+      "server-port": 53001,
+      "sender-ip": "",
+      "sender-port": 0,
+      "max-queue-size": 1024,
+      "ncr-protocol": "UDP",
+      "ncr-format": "JSON"
+    },
+    "ddns-qualifying-suffix": "stark.lan.",
+    "ddns-override-client-update": true,
+    "ddns-override-no-update": true,
     "interfaces-config": {
       "interfaces": [
         "eth0"
-      ]
+      ],
+      "dhcp-socket-type": "raw"
     },
     "lease-database": {
       "type": "memfile",
@@ -12,6 +37,17 @@
       "lfc-interval": 30,
       "max-row-errors": 100
     },
+    "option-data": [
+      {
+        "name": "domain-name-servers",
+        "data": "192.168.10.11"
+      },
+      {
+        "name": "ntp-servers",
+        "data": "150.214.94.10, 150.214.94.5",
+        "always-send": true
+      }
+    ],
     "subnet4": [
       {
         "id": 1,
@@ -22,6 +58,10 @@
               {
                 "name": "routers",
                 "data": "192.168.10.253"
+              },
+              {
+                "name": "domain-name",
+                "data": "stark.lan"
               }
             ]
           },
@@ -34,10 +74,6 @@
           {
             "name": "routers",
             "data": "192.168.10.254"
-          },
-          {
-            "name": "domain-name-servers",
-            "data": "192.168.10.11"
           }
         ],
         "reservations": [
@@ -61,8 +97,6 @@
               }
             ]
           }
-
-
         ]
       },
       {
@@ -77,6 +111,10 @@
           {
             "name": "routers",
             "data": "192.168.11.254"
+          },
+          {
+            "name": "domain-name",
+            "data": "lannister.lan"
           }
         ]
       },
@@ -92,6 +130,10 @@
           {
             "name": "routers",
             "data": "192.168.12.254"
+          },
+          {
+            "name": "domain-name",
+            "data": "targaryen.lan"
           }
         ]
       }
@@ -102,4 +144,3 @@
     "renew-timer": 300
   }
 }
-

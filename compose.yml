@@ -40,6 +40,8 @@ services:
     entrypoint: "bash -c /sbin/entrypoint.sh"
     volumes:
       - ./ned/dhcp4.json:/etc/kea/kea-dhcp4.conf
+      - ./ned/dhcp-ddns.json:/etc/kea/kea-dhcp-ddns.conf
+      - ./ned/kea.log:/var/log/kea/kea.log
       # - ./ned/dhcp:/var/lib/kea 
       - ./ned/entrypoint.sh:/sbin/entrypoint.sh
   
@@ -50,7 +52,8 @@ services:
       - ned
     networks:
       rede_stark:
-        mac_address: 02:42:ac:11:00:10  # dirección HW fija
+        ipv4_address: 192.168.10.135
+        #mac_address: 02:42:ac:11:00:10  # dirección HW fija
     cap_add:
       - NET_ADMIN
     command: >
@@ -113,8 +116,9 @@ services:
     hostname: cliente10
     depends_on:
       - ned
-    networks:
+    networks:       
       rede_lannister:
+        # ipv4_address: 192.168.10.10
         mac_address: 02:42:ac:11:10:13
     cap_add:
       - NET_ADMIN
